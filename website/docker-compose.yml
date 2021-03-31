@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  development:
+    build: .
+    ports:
+      - "1313:1313"
+    volumes:
+    - .:/usr/workspace
+    working_dir: /usr/workspace
+    command: hugo server --watch --buildDrafts --bind 0.0.0.0
