@@ -1,0 +1,26 @@
+{{ define "main" }}
+  <main>
+    <article>
+      <div class="title">
+        <h1 class="title">{{ .Title }}</h1>
+        <div class="meta"><time>{{ dateFormat "Jan 2, 2006" .Date }}</time>{{ if .Draft }} <span class="draft-label">DRAFT</span> {{ end }}</div>
+      </div>
+      <section class="body">
+        {{ .Content }}
+      </section>
+      <div class="post-tags">
+        {{ if ne .Type "page" }}
+          {{ if gt .Params.tags 0 }}
+            <nav class="nav tags">
+              <ul class="tags">
+                {{ range .Params.tags }}
+                  <li><a href="{{ "/tags/" | relLangURL }}{{ . | urlize }}">{{ . }}</a></li>
+                {{ end }}
+              </ul>
+            </nav>
+          {{ end }}
+        {{ end }}
+      </div>
+    </article>
+  </main>
+{{ end }}

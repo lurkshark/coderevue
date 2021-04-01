@@ -1,0 +1,42 @@
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {{- $title := ( .Title ) -}}
+  {{- $siteTitle := ( .Site.Title ) -}}
+  {{- if .IsHome -}}
+    <title>{{ $siteTitle }} | Home </title>
+  {{- else -}}
+    <title>{{ $title }} - {{ $siteTitle }}</title>
+  {{- end -}}
+
+  {{- if isset .Site.Params "favicon" -}}
+    <link rel="icon" type="image/png" href={{ .Site.Params.favicon }} />
+  {{- end -}}
+
+  {{ with .OutputFormats.Get "rss" -}}
+    {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+  {{ end -}}
+
+  {{- template "_internal/opengraph.html" . -}}
+  {{- template "_internal/twitter_cards.html" . -}}
+  <meta property="og:image" content="{{ .Site.Params.og_image }}"/>
+
+  <link href="{{ .Site.BaseURL }}css/fonts.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" media="screen" href="{{ .Site.BaseURL }}css/main.css" />
+  <!-- Custom CSS style get applied last -->
+  {{- if isset .Site.Params "customcss" }}
+    {{ range .Site.Params.customCSS }}
+      <link rel="stylesheet" type="text/css" href="{{ . | relURL }}">
+    {{ end }}
+  {{- end -}}
+
+  {{- range .Site.Params.customJS }}
+    {{- if or (hasPrefix . "http://") (hasPrefix . "https://") }}
+      <script src="{{ . }}"></script>
+    {{- else }}
+      <script src="{{ $.Site.BaseURL }}{{ . }}"></script>
+    {{- end }}
+  {{- end }}
+</head>
