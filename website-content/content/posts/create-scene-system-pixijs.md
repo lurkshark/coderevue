@@ -25,7 +25,6 @@ For this project we're going to say a scene is a collection of sprites on the sc
 
 In order for our coordinator to be able to manage each different scene we're going to need a common "scene" interface that it can work with. The scene needs to initialize things when created, update things each tick, and destroy things when being unloaded. Those three stages are going to be the key to our scene implementation.
 
-
 ## Implementation
 
 You can find the [final project on GitHub](https://github.com/lurkshark/coderevue/tree/main/202101-javascript-pixijs-game) or follow along below.
@@ -35,10 +34,22 @@ You can find the [final project on GitHub](https://github.com/lurkshark/coderevu
 This is the initial scene of our game. It's going to have a basic title and a button to go to the gameplay screen.
 
 ```js
-class MenuScene {
+import * as PIXI from 'pixi.js';
+import Gameplay from './gameplay';
+
+export default class Menu {
 
   constructor(coordinator) {
     this.coordinator = coordinator;
+  }
+
+  onStart() {
+  }
+
+  onUpdate(delta) {
+  }
+
+  onFinish() {
   }
 }
 ```
@@ -47,6 +58,99 @@ class MenuScene {
 
 The gamplay scene contains our actual game, which in this project is just going to be a demonstration along with a back button to get back to the menu.
 
+```js
+import * as PIXI from 'pixi.js';
+import Menu from './menu';
+
+export default class Gameplay {
+
+  constructor(coordinator) {
+    this.coordinator = coordinator;
+  }
+
+  onStart() {
+  }
+
+  onUpdate(delta) {
+  }
+
+  onFinish() {
+  }
+}
+```
+
 ### Coordinator
 
 The coordinator is what actually does the scene management. It's the entrypoint of our game and loads the first scene.
+
+```js
+import * as PIXI from 'pixi.js';
+import Menu from './menu';
+
+export default class Hilo {
+
+  constructor(window, body) {
+
+    // The PixiJS application instance
+    this.app = new PIXI.Application({
+      resizeTo: window, // Auto fill the screen
+      autoDensity: true // Handles high DPI screens
+    });
+
+    // Add application canvas to body
+    body.appendChild(this.app.view);
+
+    // Add a handler for the paint updates
+    this.app.ticker.add((delta) => {
+      this.update(delta);
+    });
+
+    // Load the menu scene initially; we pass
+    // scenes a reference to this coordinator so
+    // they can trigger other scene transitions
+    this.gotoScene(new Menu(this));
+  }
+
+  // Replace the current scene with the new one
+  async gotoScene(newScene) {
+    if (this.currentScene !== undefined) {
+      await this.currentScene.onFinish();
+      this.app.stage.removeChildren();
+    }
+
+    // This is the stage for the new scene
+    const container = new PIXI.Container();
+    // This positioning allows us to keep a 9:16 aspect
+    container.x = this.screen.width / 2 - this.width() / 2
+    container.y = this.screen.height / 2 - this.height() / 2
+
+    // Start the new scene then add it to the stage
+    await newScene.onStart(container);
+    this.app.stage.addChild(container);
+    this.currentScene = newScene;
+  }
+
+  // This allows us to pass the PixiJS ticks
+  // down to the currently active scene
+  update(delta) {
+    if (this.currentScene === undefined) return;
+    this.currentScene.onUpdate(delta);
+  }
+
+  // The dynamic width and height lets us do some smart
+  // scaling of the main game content; here we're just
+  // using it to maintain a 9:16 aspect ratio
+
+  width() {
+    const { width, height } = this.app.screen;
+    const isWidthConstrained = width < height * 9 / 16;
+    return isWidthConstrained ? width : height * 9 / 16;
+  }
+
+  height() {
+    const { width, height } = this.app.screen;
+    const isHeightConstrained = width > height * 16 / 9;
+    return isHeightConstrained ? height : width * 16 / 9;
+  }
+}
+```

@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  development:
+    image: node:12.16-stretch
+    ports:
+      - "8080:8080" # Dev HTTP server
+      - "8081:8081" # Hot reload server
+    volumes:
+      # Base of the repository is
+      # mounted as the working directory
+      - ./:/usr/workspace
+    working_dir: /usr/workspace
