@@ -17,5 +17,9 @@ jobs:
           HUGO_RELEASES=https://github.com/gohugoio/hugo/releases/download/
           HUGO_RELEASE_DEB=${HUGO_RELEASES}v${HUGO_VERSION}/${HUGO_DEB}
           wget ${HUGO_RELEASE_DEB} && sudo apt install ./${HUGO_DEB}
-      - name: Verify Hugo was installed
-        run: hugo --version
+      - name: Generate Hugo website files
+        run: |
+          cd ${GITHUB_WORKSPACE}/website-content
+          hugo
+      - name: List generated files
+        run: ls -al ${GITHUB_WORKSPACE}/website-content/public
