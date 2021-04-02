@@ -1,0 +1,24 @@
+{
+  "name": "hilo",
+  "version": "1.0.0",
+  "repository": "github:lurkshark/coderevue",
+  "private": true,
+  "scripts": {
+    "clean": "rm -rf dist/* .cache/*",
+    "build": "parcel build src/index.html",
+    "start": "parcel src/index.html --host 0.0.0.0 --hmr-hostname localhost --port 8080 --hmr-port 8081"
+  },
+  "dependencies": {
+    "pixi.js": "~5.2.0",
+    "localforage": "^1.7.3",
+    "webfontloader": "^1.6.28"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.7",
+    "@babel/preset-env": "^7.12.7",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-sw-precache": "^1.1.2"
+  },
+  "browserslist": "firefox esr",
+  "sw-precache": {}
+}

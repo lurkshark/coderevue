@@ -11,6 +11,6 @@ The goal of this site is to create how-to content with the context of how to fit
 
 ## Acknowledgements
 
-* Built with the [Hugo](#) static website generator.
-* Design is a custom fork from the [Archie Theme](#).
-* Some illustrations are from [unDraw](#).
+* Built with the [Hugo](https://gohugo.io/) static website generator.
+* Design is a customized fork of the [Archie Theme](https://github.com/athul/archie).
+* Illustrations are from [unDraw](https://undraw.co/) with some modifications.

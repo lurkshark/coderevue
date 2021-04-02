@@ -9,17 +9,17 @@ pygmentsstyle = "monokai"
 pygmentscodefences = true
 pygmentscodefencesguesssyntax = true
 
-[[menu.main]]
-name = "All Posts"
-url = "/posts"
-weight = 2
+#[[menu.main]]
+#name = "All Posts"
+#url = "/posts/"
+#weight = 2
 
-[[menu.main]]
-name = "About"
-url = "/about"
-weight = 3
+#[[menu.main]]
+#name = "About"
+#url = "/about/"
+#weight = 3
 
-[[menu.main]]
-name = "Tags"
-url = "/tags"
-weight = 4
+#[[menu.main]]
+#name = "Tags"
+#url = "/tags/"
+#weight = 4
