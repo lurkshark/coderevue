@@ -16,7 +16,7 @@ jobs:
           HUGO_DEB=hugo_${HUGO_VERSION}_Linux-64bit.deb
           HUGO_RELEASES=https://github.com/gohugoio/hugo/releases/download/
           HUGO_RELEASE_DEB=${HUGO_RELEASES}v${HUGO_VERSION}/${HUGO_DEB}
-          echo ${HUGO_RELEASE}
+          echo Downloading ${HUGO_RELEASE}
           wget ${HUGO_RELEASE}
           sudo apt install ./${HUGO_DEB}
       - name: Verify Hugo was installed
