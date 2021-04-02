@@ -31,4 +31,4 @@ jobs:
           ssh-add - <<< ${NFSN_SSH_KEY}
           SOURCE=${GITHUB_WORKSPACE}/website-content/public/
           DESTINATION=${NFSN_USERNAME}@${NFSN_HOST}:/home/public
-          rsync -zvrh ${SOURCE} ${DESTINATION}
+          rsync -zvrh -e "ssh -o StrictHostKeyChecking=no" ${SOURCE} ${DESTINATION}
