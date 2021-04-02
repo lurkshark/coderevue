@@ -1,8 +1,8 @@
 import * as PIXI from 'pixi.js';
 import localforage from 'localforage';
 import WebFont from 'webfontloader';
-import Gameplay from './gameplay';
-import './assets/fonts';
+import './assets/fonts/index';
+import Menu from './menu';
 
 export default class Hilo {
 
@@ -14,16 +14,15 @@ export default class Hilo {
     // The PixiJS application instance
     this.app = new PIXI.Application({
       resizeTo: window, // Auto fill the screen
-      autoDensity: true // Handles high DPI screens
+      autoDensity: true, // Handles high DPI screens
+      backgroundColor: 0xffffff
     });
 
     // Add application canvas to body
     body.appendChild(this.app.view);
 
-    // Add a handler for the paint updates
-    this.app.ticker.add((delta) => {
-      this.update(delta);
-    });
+    // Add a handler for the updates
+    this.app.ticker.add(this.update);
 
     // Initialize instance of localforage
     this.localforage = localforage.createInstance({
@@ -31,76 +30,65 @@ export default class Hilo {
     });
 
     WebFont.load({
-      // Load the game when fonts are ready
-      active: () => this.gotoScene(new Gameplay(this)),
+      // Load the menu scene when fonts are ready
+      active: () => this.gotoScene(new Menu(this)),
       custom: {
-        families: ['Rubik', 'WorkSans']
+        families: ['Roboto Mono', 'Atkinson Hyperlegible']
       }
     });
   }
 
-  // Destroy current scene and load new
+  // Replace the current scene with the new one
   async gotoScene(newScene) {
     if (this.currentScene !== undefined) {
       await this.currentScene.onFinish();
-      // This is a hacky inline fadeout
-      await new Promise((resolve) => {
-        let start;
-        const fadeOut = (timestamp) => {
-          if (start === undefined) start = timestamp
-          const elapsed = timestamp - start;
-          const alpha = Math.max(0, 1 - elapsed / 100);
-          this.app.stage.alpha = alpha;
-          if (elapsed < 100) {
-            requestAnimationFrame(fadeOut);
-          } else {
-            resolve();
-          }
-        }
-        requestAnimationFrame(fadeOut);
-      });
       this.app.stage.removeChildren();
     }
 
+    // This is the stage for the new scene
     const container = new PIXI.Container();
-    container.x = this.app.screen.width / 2 - this.width / 2;
-    container.y = this.app.screen.height / 2 - this.height / 2;
+    container.width = this.WIDTH;
+    container.height = this.HEIGHT;
+    container.scale.x = this.actualWidth() / this.WIDTH;
+    container.scale.y = this.actualHeight() / this.HEIGHT;
+    container.x = this.app.screen.width / 2 - this.actualWidth() / 2;
+    container.y = this.app.screen.height / 2 - this.actualHeight() / 2;
 
+    // Start the new scene and add it to the stage
     await newScene.onStart(container);
     this.app.stage.addChild(container);
     this.currentScene = newScene;
-    // This is a hacky inline fadein
-    await new Promise((resolve) => {
-      let start;
-      const fadeIn = (timestamp) => {
-        if (start === undefined) start = timestamp;
-        const elapsed = timestamp - start;
-        const alpha = Math.min(1, elapsed / 100);
-        this.app.stage.alpha = alpha;
-        if (elapsed < 100) {
-          requestAnimationFrame(fadeIn);
-        } else {
-          resolve();
-        }
-      }
-      requestAnimationFrame(fadeIn);
-    })
   }
 
+  // This allows us to pass the PixiJS ticks
+  // down to the currently active scene
   update(delta) {
-    if (this.currentScene === undefined) return;
-    this.currentScene.onUpdate(delta);
+    if (this.currentScene !== undefined) {
+      this.currentScene.onUpdate(delta);
+    }
   }
 
-  get width() {
+  get WIDTH() {
+    return 375;
+  }
+
+  get HEIGHT() {
+    return 667;
+  }
+
+  // The dynamic width and height lets us do some smart
+  // scaling of the main game content; here we're just
+  // using it to maintain a 9:16 aspect ratio
+
+  actualWidth() {
     const { width, height } = this.app.screen;
     const isWidthConstrained = width < height * 9 / 16;
-    return isWidthConstrained ? width - 40 : height * 9 / 16 - 40;
+    return isWidthConstrained ? width : height * 9 / 16;
   }
 
-  get height() {
+  actualHeight() {
     const { width, height } = this.app.screen;
-    const isHeightConstrained = height < width * 16 / 9;
-    return isHeightConstrained ? height - 40 : width * 16 / 9 - 40;
+    const isHeightConstrained = width * 16 / 9 > height;
+    return isHeightConstrained ? height : width * 16 / 9;
   }
 }

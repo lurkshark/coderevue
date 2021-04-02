@@ -1,0 +1,12 @@
+@font-face {  
+  font-family: 'Roboto Mono';
+  font-style: normal;
+  font-weight: 400;  
+  src: url('./roboto-mono-variable.ttf') format('truetype');
+}
+@font-face {  
+  font-family: 'Atkinson Hyperlegible';
+  font-style: normal;
+  font-weight: 400;  
+  src: url('./atkinson-hyperlegible-regular.ttf') format('truetype');
+}
