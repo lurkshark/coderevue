@@ -21,5 +21,14 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/website-content
           hugo
-      - name: List generated files
-        run: ls -al ${GITHUB_WORKSPACE}/website-content/public
+      - name: Rsync generated files to remote server
+        env:
+          NFSN_HOST: ${{ secrets.NFSN_HOST }}
+          NFSN_SSH_KEY: ${{ secrets.NFSN_SSH_KEY }}
+          NFSN_USERNAME: ${{ secrets.NFSN_USERNAME }}
+        run: |
+          source agent-start
+          ssh-add - <<< ${NFSN_SSH_KEY}
+          SOURCE=${GITHUB_WORKSPACE}/website-content/public/
+          DESTINATION=${NFSN_USERNAME}@${NFSN_HOST}:/home/public
+          rsync -zvrh ${SOURCE} ${DESTINATION}
