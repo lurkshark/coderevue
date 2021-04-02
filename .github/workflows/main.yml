@@ -27,7 +27,6 @@ jobs:
           NFSN_SSH_KEY: ${{ secrets.NFSN_SSH_KEY }}
           NFSN_USERNAME: ${{ secrets.NFSN_USERNAME }}
         run: |
-          source agent-start
           ssh-add - <<< ${NFSN_SSH_KEY}
           SOURCE=${GITHUB_WORKSPACE}/website-content/public/
           DESTINATION=${NFSN_USERNAME}@${NFSN_HOST}:/home/public
