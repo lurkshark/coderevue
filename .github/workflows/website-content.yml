@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - main
-      - xx-deploy
-
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
@@ -31,4 +29,4 @@ jobs:
           ssh-add - <<< ${NFSN_SSH_KEY}
           SOURCE=${GITHUB_WORKSPACE}/website-content/public/
           DESTINATION=${NFSN_USERNAME}@${NFSN_HOST}:/home/public
-          rsync -zvrh -e "ssh -o StrictHostKeyChecking=no" ${SOURCE} ${DESTINATION}
+          rsync -zvrh -e 'ssh -o StrictHostKeyChecking=no' ${SOURCE} ${DESTINATION}
