@@ -12,10 +12,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: Download and install Hugo package
         run: |
-          HUGO_VERSION=0.82.0
-          HUGO_DEB=hugo_${HUGO_VERSION}_Linux-64bit.deb
-          HUGO_RELEASES=https://github.com/gohugoio/hugo/releases/download/
-          HUGO_RELEASE_DEB=${HUGO_RELEASES}v${HUGO_VERSION}/${HUGO_DEB}
-          wget -O ${HUGO_RELEASE} && sudo apt install ./${HUGO_DEB}
+          HUGO_VERSION="0.82.0"
+          HUGO_DEB="hugo_${HUGO_VERSION}_Linux-64bit.deb"
+          HUGO_RELEASES="https://github.com/gohugoio/hugo/releases/download/"
+          HUGO_RELEASE_DEB="${HUGO_RELEASES}v${HUGO_VERSION}/${HUGO_DEB}"
+          wget -O ${HUGO_RELEASE}
+          sudo apt install ./${HUGO_DEB}
       - name: Verify Hugo was installed
         run: hugo --version
