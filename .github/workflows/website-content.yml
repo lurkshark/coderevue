@@ -1,0 +1,32 @@
+name: Deploy to NearlyFreeSpeech.NET
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download and install Hugo package
+        run: |
+          HUGO_VERSION=0.82.0
+          HUGO_DEB=hugo_${HUGO_VERSION}_Linux-64bit.deb
+          HUGO_RELEASES=https://github.com/gohugoio/hugo/releases/download/
+          HUGO_RELEASE_DEB=${HUGO_RELEASES}v${HUGO_VERSION}/${HUGO_DEB}
+          wget ${HUGO_RELEASE_DEB} && sudo apt install ./${HUGO_DEB}
+      - name: Generate Hugo website files
+        run: |
+          cd ${GITHUB_WORKSPACE}/website-content
+          hugo
+      - name: Rsync generated files to remote server
+        env:
+          NFSN_HOST: ${{ secrets.NFSN_HOST }}
+          NFSN_SSH_KEY: ${{ secrets.NFSN_SSH_KEY }}
+          NFSN_USERNAME: ${{ secrets.NFSN_USERNAME }}
+        run: |
+          eval `ssh-agent`
+          ssh-add - <<< ${NFSN_SSH_KEY}
+          SOURCE=${GITHUB_WORKSPACE}/website-content/public/
+          DESTINATION=${NFSN_USERNAME}@${NFSN_HOST}:/home/public
+          rsync -zvrh -e 'ssh -o StrictHostKeyChecking=no' ${SOURCE} ${DESTINATION}
