@@ -14,6 +14,7 @@ export default class Menu {
   onStart(container) {
     return new Promise((resolve) => {
       const setup = async (loader, resources) => {
+        // Game icon sprite
         const arrowsSprite = new PIXI.Sprite(resources[hilowArrowsAsset].texture);
         arrowsSprite.width = 46
         // Scale the height to match the width
@@ -21,6 +22,7 @@ export default class Menu {
         arrowsSprite.x = 30;
         arrowsSprite.y = 98;
 
+        // Game title text next to the icon
         const titleText = new PIXI.Text('Hilow', {
           fontFamily: 'Roboto Mono',
           fill: 0x000000,
@@ -29,6 +31,7 @@ export default class Menu {
         titleText.x = 86;
         titleText.y = 90;
 
+        // Game instructions text
         const description = 'Try to predict if the next value is going to be'
           + ' higher or lower. You get points for each correct guess, with more'
           + ' points for tricky guesses. Don\'t get too greedy though, make a'
@@ -44,6 +47,7 @@ export default class Menu {
         descriptionText.x = 35;
         descriptionText.y = 190;
 
+        // Text button to go to gameplay screen
         const gameplayText = new PIXI.Text('Start a new game', {
           fontFamily: 'Roboto Mono',
           fill: 0x000000,
@@ -51,12 +55,15 @@ export default class Menu {
         });
         gameplayText.x = 35;
         gameplayText.y = 320;
+        // These options make the text clickable
         gameplayText.buttonMode = true;
         gameplayText.interactive = true;
+        // Go to the gameplay scene when clicked
         gameplayText.on('pointerup', () => {
           this.coordinator.gotoScene(new Gameplay(this.coordinator));
         });
 
+        // Text button to go to game history screen
         const historyText = new PIXI.Text('Game history', {
           fontFamily: 'Roboto Mono',
           fill: 0xcccccc,
@@ -64,12 +71,14 @@ export default class Menu {
         });
         historyText.x = 35;
         historyText.y = 370;
+        // Also a clickable button
         historyText.buttonMode = true;
         historyText.interactive = true;
         historyText.on('pointerup', () => {
           // TODO: Implement history scene
         });
 
+        // Little CodeREVUE.net link at the bottom
         const codeRevueSprite = new PIXI.Sprite(resources[codeRevueAsset].texture);
         codeRevueSprite.width = 100
         codeRevueSprite.scale.y = codeRevueSprite.scale.x;
@@ -81,12 +90,16 @@ export default class Menu {
           this.coordinator.window.location = 'https://coderevue.net';
         });
 
+        // Finally we add all these elements to the new
+        // container provided by the coordinator
         container.addChild(arrowsSprite);
         container.addChild(titleText);
         container.addChild(descriptionText);
         container.addChild(gameplayText);
         container.addChild(historyText);
         container.addChild(codeRevueSprite);
+        // Resolving the promise signals to the coordinator
+        // that this scene is all done with setup
         resolve();
       }
 
@@ -102,11 +115,14 @@ export default class Menu {
 
       // Load any assets and setup
       PIXI.Loader.shared.load(setup);
-    })
+    });
   }
 
-  onUpdate(delta) {
-  }
+  // The menu is static so there's not
+  // any need for changes on update
+  onUpdate(delta) {}
 
+  // There isn't anything to teardown
+  // when the menu exits
   onFinish() {}
 }

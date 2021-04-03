@@ -23,7 +23,9 @@ export default class Hilo {
     body.appendChild(this.app.view);
 
     // Add a handler for the updates
-    this.app.ticker.add(this.update);
+    this.app.ticker.add((delta) => {
+      this.update(delta)
+    });
 
     // Initialize instance of localforage
     this.localforage = localforage.createInstance({
@@ -79,7 +81,8 @@ export default class Hilo {
 
   // The dynamic width and height lets us do some smart
   // scaling of the main game content; here we're just
-  // using it to maintain a 9:16 aspect ratio
+  // using it to maintain a 9:16 aspect ratio and giving
+  // our scenes a 375x667 stage to work with
 
   actualWidth() {
     const { width, height } = this.app.screen;
