@@ -10,6 +10,7 @@ export default class Hilo {
     // Adjust the resolution for retina screens; along with
     // the autoDensity this transparently handles high resolutions
     PIXI.settings.RESOLUTION = window.devicePixelRatio || 1;
+    this.window = window;
 
     // The PixiJS application instance
     this.app = new PIXI.Application({

@@ -1,6 +1,8 @@
 import * as PIXI from 'pixi.js';
+import Gameplay from './gameplay';
 // We're going to be using the asset loader to load this
 import hilowArrowsAsset from './assets/sprites/hilow-arrows.png';
+import codeRevueAsset from './assets/sprites/code-revue-text.png';
 
 export default class Menu {
 
@@ -14,8 +16,9 @@ export default class Menu {
       const setup = async (loader, resources) => {
         const arrowsSprite = new PIXI.Sprite(resources[hilowArrowsAsset].texture);
         arrowsSprite.width = 46
+        // Scale the height to match the width
         arrowsSprite.scale.y = arrowsSprite.scale.x;
-        arrowsSprite.x = 40;
+        arrowsSprite.x = 30;
         arrowsSprite.y = 98;
 
         const titleText = new PIXI.Text('Hilow', {
@@ -23,19 +26,78 @@ export default class Menu {
           fill: 0x000000,
           fontSize: 62
         });
-        titleText.x = 96;
+        titleText.x = 86;
         titleText.y = 90;
+
+        const description = 'Try to predict if the next value is going to be'
+          + ' higher or lower. You get points for each correct guess, with more'
+          + ' points for tricky guesses. Don\'t get too greedy though, make a'
+          + ' wrong guess and you\'ll lose all the points you\'ve earned!';
+        const descriptionText = new PIXI.Text(description, {
+          fontFamily: 'Atkinson Hyperlegible',
+          fill: 0x666666,
+          fontSize: 14,
+          wordWrap: true,
+          wordWrapWidth: 320,
+          lineHeight: 20
+        });
+        descriptionText.x = 35;
+        descriptionText.y = 190;
+
+        const gameplayText = new PIXI.Text('Start a new game', {
+          fontFamily: 'Roboto Mono',
+          fill: 0x000000,
+          fontSize: 24
+        });
+        gameplayText.x = 35;
+        gameplayText.y = 320;
+        gameplayText.buttonMode = true;
+        gameplayText.interactive = true;
+        gameplayText.on('pointerup', () => {
+          this.coordinator.gotoScene(new Gameplay(this.coordinator));
+        });
+
+        const historyText = new PIXI.Text('Game history', {
+          fontFamily: 'Roboto Mono',
+          fill: 0xcccccc,
+          fontSize: 24
+        });
+        historyText.x = 35;
+        historyText.y = 370;
+        historyText.buttonMode = true;
+        historyText.interactive = true;
+        historyText.on('pointerup', () => {
+          // TODO: Implement history scene
+        });
+
+        const codeRevueSprite = new PIXI.Sprite(resources[codeRevueAsset].texture);
+        codeRevueSprite.width = 100
+        codeRevueSprite.scale.y = codeRevueSprite.scale.x;
+        codeRevueSprite.x = 35;
+        codeRevueSprite.y = 620;
+        codeRevueSprite.buttonMode = true;
+        codeRevueSprite.interactive = true;
+        codeRevueSprite.on('pointerup', () => {
+          this.coordinator.window.location = 'https://coderevue.net';
+        });
 
         container.addChild(arrowsSprite);
         container.addChild(titleText);
+        container.addChild(descriptionText);
+        container.addChild(gameplayText);
+        container.addChild(historyText);
+        container.addChild(codeRevueSprite);
         resolve();
       }
 
       // The loader raises an exception if you try to load the same
       // resource twice, and since this loader instance is shared,
       // we need to confirm that the asset isn't already loaded
-      if (!PIXI.Loader.shared.resources[hilowArrowsAsset]) {
-        PIXI.Loader.shared.add(hilowArrowsAsset);
+      const assets = [hilowArrowsAsset, codeRevueAsset];
+      for (const asset of assets) {
+        if (!PIXI.Loader.shared.resources[asset]) {
+          PIXI.Loader.shared.add(asset);
+        }
       }
 
       // Load any assets and setup
