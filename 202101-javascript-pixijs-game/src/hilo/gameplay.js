@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import Menu from './menu'
 // We're going to be using the asset loader to load this
-import hilowArrowsAsset from './assets/sprites/hilow-arrows.png';
+import hiloArrowsAsset from './assets/sprites/hilo-arrows.png';
 
 export default class Gameplay {
 
@@ -31,7 +31,7 @@ export default class Gameplay {
 
         // Game icon sprite gets a this reference because we
         // need to be able to modify it in the onUpdate function
-        this.arrowsSprite = new PIXI.Sprite(resources[hilowArrowsAsset].texture);
+        this.arrowsSprite = new PIXI.Sprite(resources[hiloArrowsAsset].texture);
         this.arrowsSprite.width = 120
         // Scale the height to match the width
         this.arrowsSprite.scale.y = this.arrowsSprite.scale.x;
@@ -48,8 +48,8 @@ export default class Gameplay {
       // The loader raises an exception if you try to load the same
       // resource twice, and since this loader instance is shared,
       // we need to confirm that the asset isn't already loaded
-      if (!PIXI.Loader.shared.resources[hilowArrowsAsset]) {
-        PIXI.Loader.shared.add(hilowArrowsAsset);
+      if (!PIXI.Loader.shared.resources[hiloArrowsAsset]) {
+        PIXI.Loader.shared.add(hiloArrowsAsset);
       }
 
       // Load any assets and setup

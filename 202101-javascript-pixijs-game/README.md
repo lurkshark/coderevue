@@ -29,12 +29,12 @@ docker-compose run --service-ports development npm start
 This will build a poduction-ready bundle in the `dist` directory that can be uploaded to your server.
 
 ```sh
-docker-compose run --service-ports development npm build
+docker-compose run development npm build
 ```
 
 ### Clean
 
 ```sh
-docker-compose run --service-ports development npm clean
+docker-compose run development npm clean
 docker-compose down --remove-orphans
 ```

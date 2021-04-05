@@ -1,7 +1,7 @@
 import * as PIXI from 'pixi.js';
 import Gameplay from './gameplay';
 // We're going to be using the asset loader to load this
-import hilowArrowsAsset from './assets/sprites/hilow-arrows.png';
+import hiloArrowsAsset from './assets/sprites/hilo-arrows.png';
 import codeRevueAsset from './assets/sprites/code-revue-text.png';
 
 export default class Menu {
@@ -15,7 +15,7 @@ export default class Menu {
     return new Promise((resolve) => {
       const setup = async (loader, resources) => {
         // Game icon sprite
-        const arrowsSprite = new PIXI.Sprite(resources[hilowArrowsAsset].texture);
+        const arrowsSprite = new PIXI.Sprite(resources[hiloArrowsAsset].texture);
         arrowsSprite.width = 46
         // Scale the height to match the width
         arrowsSprite.scale.y = arrowsSprite.scale.x;
@@ -23,7 +23,7 @@ export default class Menu {
         arrowsSprite.y = 98;
 
         // Game title text next to the icon
-        const titleText = new PIXI.Text('Hilow', {
+        const titleText = new PIXI.Text('Hilo', {
           fontFamily: 'Roboto Mono',
           fill: 0x000000,
           fontSize: 62
@@ -106,7 +106,7 @@ export default class Menu {
       // The loader raises an exception if you try to load the same
       // resource twice, and since this loader instance is shared,
       // we need to confirm that the asset isn't already loaded
-      const assets = [hilowArrowsAsset, codeRevueAsset];
+      const assets = [hiloArrowsAsset, codeRevueAsset];
       for (const asset of assets) {
         if (!PIXI.Loader.shared.resources[asset]) {
           PIXI.Loader.shared.add(asset);

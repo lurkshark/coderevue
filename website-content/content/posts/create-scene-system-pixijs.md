@@ -17,7 +17,7 @@ You can! Full-featured game engines often include a scene system along with a to
 
 ## A scene management system
 
-We're going to create a scene management system for PixiJS that loosely follows the pattern of Android activities. If you haven't done any Android development don't worry, the pattern will make sense on its own. Were going ot call this scene manager the "coordinator" and it's going to be in charge of loading scenes in, updating the active scene, and removing old scenes.
+We're going to create a scene management system for PixiJS that'll let us organize our different "scenes" in to individual modules that can be swapped in and out of view. If you're familiar with Android development this is going to look a lot like dealing with activities. If you haven't done any Android development don't worry, the pattern will make sense on its own. Were going ot call this scene manager the "coordinator" and it's going to be in charge of loading scenes in, updating the active scene, and removing old scenes.
 
 ## What is a scene?
 
