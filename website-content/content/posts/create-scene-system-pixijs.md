@@ -40,42 +40,133 @@ import Gameplay from './gameplay';
 export default class Menu {
 
   constructor(coordinator) {
+    this.app = coordinator.app;
     this.coordinator = coordinator;
   }
 
-  onStart() {
+  onStart(container) {
+    return new Promise((resolve) => {
+      const setup = async (loader, resources) => {
+        // Game title text
+        const titleText = new PIXI.Text('Hilow', {
+          fontFamily: 'Roboto Mono',
+          fill: 0x000000,
+          fontSize: 62
+        });
+        titleText.x = 35;
+        titleText.y = 90;
+
+        // Text button to go to gameplay screen
+        const gameplayText = new PIXI.Text('Start a new game', {
+          fontFamily: 'Roboto Mono',
+          fill: 0x000000,
+          fontSize: 24
+        });
+        gameplayText.x = 35;
+        gameplayText.y = 320;
+        // These options make the text clickable
+        gameplayText.buttonMode = true;
+        gameplayText.interactive = true;
+        // Go to the gameplay scene when clicked
+        gameplayText.on('pointerup', () => {
+          this.coordinator.gotoScene(new Gameplay(this.coordinator));
+        });
+
+        // Finally we add these elements to the new
+        // container provided by the coordinator
+        container.addChild(titleText);
+        container.addChild(gameplayText);
+        // Resolving the promise signals to the coordinator
+        // that this scene is all done with setup
+        resolve();
+      }
+
+      // Load any assets and setup
+      PIXI.Loader.shared.load(setup);
+    });
   }
 
-  onUpdate(delta) {
-  }
+  // The menu is static so there's not
+  // any need for changes on update
+  onUpdate(delta) {}
 
-  onFinish() {
-  }
+  // There isn't anything to teardown
+  // when the menu exits
+  onFinish() {}
 }
 ```
 
 ### Gameplay Scene
 
-The gamplay scene contains our actual game, which in this project is just going to be a demonstration along with a back button to get back to the menu.
+The gamplay scene contains our actual game, which in this project is just going to be a demonstration of a rotating sprite along with a back button to get back to the menu.
 
 ```js
 import * as PIXI from 'pixi.js';
-import Menu from './menu';
+import Menu from './menu'
+// We're going to be using the asset loader to load this
+import hilowArrowsAsset from './assets/sprites/hilow-arrows.png';
 
 export default class Gameplay {
 
   constructor(coordinator) {
+    this.app = coordinator.app;
     this.coordinator = coordinator;
   }
 
-  onStart() {
+  onStart(container) {
+    return new Promise((resolve) => {
+      const setup = async (loader, resources) => {
+        // Text button to go back to menu screen
+        const exitText = new PIXI.Text('Exit to menu', {
+          fontFamily: 'Roboto Mono',
+          fill: 0x000000,
+          fontSize: 16
+        });
+        exitText.x = 35;
+        exitText.y = 35;
+        // These options make the text clickable
+        exitText.buttonMode = true;
+        exitText.interactive = true;
+        // Go to the menu scene when clicked
+        exitText.on('pointerup', () => {
+          this.coordinator.gotoScene(new Menu(this.coordinator));
+        });
+
+        // Game icon sprite gets a this reference because we
+        // need to be able to modify it in the onUpdate function
+        this.arrowsSprite = new PIXI.Sprite(resources[hilowArrowsAsset].texture);
+        this.arrowsSprite.width = 120
+        // Scale the height to match the width
+        this.arrowsSprite.scale.y = this.arrowsSprite.scale.x;
+        // Set the anchor to the center so rotation makes sense
+        this.arrowsSprite.anchor.set(0.5)
+        this.arrowsSprite.x = 185;
+        this.arrowsSprite.y = 300;
+
+        container.addChild(exitText);
+        container.addChild(this.arrowsSprite);
+        resolve();
+      }
+
+      // The loader raises an exception if you try to load the same
+      // resource twice, and since this loader instance is shared,
+      // we need to confirm that the asset isn't already loaded
+      if (!PIXI.Loader.shared.resources[hilowArrowsAsset]) {
+        PIXI.Loader.shared.add(hilowArrowsAsset);
+      }
+
+      // Load any assets and setup
+      PIXI.Loader.shared.load(setup);
+    });
   }
 
+  // We're just going to slowly rotate the icon
+  // on every update tick
   onUpdate(delta) {
+    this.arrowsSprite.rotation += delta / 100
   }
 
-  onFinish() {
-  }
+  onFinish() {}
 }
 ```
 
@@ -90,25 +181,28 @@ import Menu from './menu';
 export default class Hilo {
 
   constructor(window, body) {
+    // Adjust the resolution for retina screens; along with
+    // the autoDensity this transparently handles high resolutions
+    PIXI.settings.RESOLUTION = window.devicePixelRatio || 1;
 
     // The PixiJS application instance
     this.app = new PIXI.Application({
       resizeTo: window, // Auto fill the screen
-      autoDensity: true // Handles high DPI screens
+      autoDensity: true, // Handles high DPI screens
+      backgroundColor: 0xffffff
     });
 
     // Add application canvas to body
     body.appendChild(this.app.view);
 
-    // Add a handler for the paint updates
+    // Add a handler for the updates
     this.app.ticker.add((delta) => {
-      this.update(delta);
+      this.update(delta)
     });
 
-    // Load the menu scene initially; we pass
-    // scenes a reference to this coordinator so
-    // they can trigger other scene transitions
-    this.gotoScene(new Menu(this));
+    // Load the menu scene initially; scenes get a reference
+    // back to the coordinator so they can trigger transitions
+    this.gotoScene(new Menu(this))
   }
 
   // Replace the current scene with the new one
@@ -120,11 +214,14 @@ export default class Hilo {
 
     // This is the stage for the new scene
     const container = new PIXI.Container();
-    // This positioning allows us to keep a 9:16 aspect
-    container.x = this.screen.width / 2 - this.width() / 2
-    container.y = this.screen.height / 2 - this.height() / 2
+    container.width = this.WIDTH;
+    container.height = this.HEIGHT;
+    container.scale.x = this.actualWidth() / this.WIDTH;
+    container.scale.y = this.actualHeight() / this.HEIGHT;
+    container.x = this.app.screen.width / 2 - this.actualWidth() / 2;
+    container.y = this.app.screen.height / 2 - this.actualHeight() / 2;
 
-    // Start the new scene then add it to the stage
+    // Start the new scene and add it to the stage
     await newScene.onStart(container);
     this.app.stage.addChild(container);
     this.currentScene = newScene;
@@ -133,23 +230,33 @@ export default class Hilo {
   // This allows us to pass the PixiJS ticks
   // down to the currently active scene
   update(delta) {
-    if (this.currentScene === undefined) return;
-    this.currentScene.onUpdate(delta);
+    if (this.currentScene !== undefined) {
+      this.currentScene.onUpdate(delta);
+    }
+  }
+
+  get WIDTH() {
+    return 375;
+  }
+
+  get HEIGHT() {
+    return 667;
   }
 
   // The dynamic width and height lets us do some smart
   // scaling of the main game content; here we're just
-  // using it to maintain a 9:16 aspect ratio
+  // using it to maintain a 9:16 aspect ratio and giving
+  // our scenes a 375x667 stage to work with
 
-  width() {
+  actualWidth() {
     const { width, height } = this.app.screen;
     const isWidthConstrained = width < height * 9 / 16;
     return isWidthConstrained ? width : height * 9 / 16;
   }
 
-  height() {
+  actualHeight() {
     const { width, height } = this.app.screen;
-    const isHeightConstrained = width > height * 16 / 9;
+    const isHeightConstrained = width * 16 / 9 > height;
     return isHeightConstrained ? height : width * 16 / 9;
   }
 }

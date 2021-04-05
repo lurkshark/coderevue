@@ -14,3 +14,4 @@ The goal of this site is to create how-to content with the context of how to fit
 * Built with the [Hugo](https://gohugo.io/) static website generator.
 * Design is a customized fork of the [Archie Theme](https://github.com/athul/archie).
 * Illustrations are from [unDraw](https://undraw.co/) with some modifications.
+* The site icon is the "performing arts" emoji from [Google](https://github.com/googlefonts/noto-emoji).

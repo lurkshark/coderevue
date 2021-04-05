@@ -2,17 +2,17 @@
   font-family: 'Roboto Mono';
   font-style: normal;
   font-weight: 400;  
-  src: url('../fonts/roboto-mono-variable.ttf');
+  src: url('../fonts/roboto-mono-variable.ttf') format('truetype');
 }
 @font-face {  
   font-family: 'Atkinson Hyperlegible';
   font-style: normal;
   font-weight: 400;  
-  src: url('../fonts/atkinson-hyperlegible-regular.ttf');
+  src: url('../fonts/atkinson-hyperlegible-regular.ttf') format('truetype');
 }
 @font-face {  
   font-family: 'Work Sans';
   font-style: normal;
   font-weight: 400;  
-  src: url('../fonts/work-sans-variable.ttf');
+  src: url('../fonts/work-sans-variable.ttf') format('truetype');
 }
