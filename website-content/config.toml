@@ -4,6 +4,9 @@ title = "CodeREVUE.net"
 copyright = "CodeREVUE.net"
 theme = "archie"
 
+# Main page listing
+summaryLength = 40
+
 # Code Highlight
 pygmentsstyle = "monokai"
 pygmentscodefences = true
