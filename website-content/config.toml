@@ -3,6 +3,7 @@ languageCode = "en-us"
 title = "CodeREVUE.net"
 copyright = "CodeREVUE.net"
 theme = "archie"
+uglyURLs = true
 
 # Main page listing
 summaryLength = 40

@@ -16,8 +16,9 @@ There's no "one size fits all" option when it comes to the dimensions of HTML5 g
 
 Your game has a core area that contains everything needed to play the game. This is going to include things like a view of the play-field, on-screen controls, nearby enemies, and more. Without a clear view of the playable area your game isn't going to work. In order for us to decide how to scale to the player's screen size, we're going to need to define this playable area.
 
-In our [example game Hilo](https://github.com/lurkshark/coderevue/tree/main/202101-javascript-pixijs-game), there's an area for showing the past values, the current value, and buttons to let the user choose their next action. Those components are our playable area that need to fit within the player's screen.
+In our [example game Hilo](https://github.com/lurkshark/coderevue/tree/main/202101-javascript-pixijs-game), there's an area for showing the past values, the current value, and buttons to let the user choose their next action. Those components are our playable area that need to fit within the player's screen. Regardless of the size or dimension of the player's screen, these elements need to be visible.
 
 ## Fixed ratio scaling
 ## Dynamic scaling
+## Redraw on resize
 ## Implementation
