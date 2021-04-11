@@ -1,29 +1,15 @@
 baseURL = "https://coderevue.net/"
 languageCode = "en-us"
+theme = "archie"
+
+# Header and footer
 title = "CodeREVUE.net"
 copyright = "CodeREVUE.net"
-theme = "archie"
-uglyURLs = true
 
 # Main page listing
 summaryLength = 40
 
 # Code Highlight
-pygmentsstyle = "monokai"
 pygmentscodefences = true
 pygmentscodefencesguesssyntax = true
-
-#[[menu.main]]
-#name = "All Posts"
-#url = "/posts/"
-#weight = 2
-
-#[[menu.main]]
-#name = "About"
-#url = "/about/"
-#weight = 3
-
-#[[menu.main]]
-#name = "Tags"
-#url = "/tags/"
-#weight = 4
+pygmentsstyle = "monokai"
