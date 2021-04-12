@@ -24,7 +24,7 @@ export default class Menu {
 
         // Game title text next to the icon
         const titleText = new PIXI.Text('Hilo', {
-          fontFamily: 'Roboto Mono',
+          fontFamily: ['Roboto Mono', 'monospace'],
           fill: 0x000000,
           fontSize: 62
         });
@@ -34,10 +34,10 @@ export default class Menu {
         // Game instructions text
         const description = 'Try to predict if the next value is going to be'
           + ' higher or lower. You get points for each correct guess, with more'
-          + ' points for tricky guesses. Don\'t get too greedy though, make a'
-          + ' wrong guess and you\'ll lose all the points you\'ve earned!';
+          + ' points for tricky guesses. Don\'t get too greedy though, choose'
+          + ' incorrectly and you\'ll lose all the points you\'ve earned!';
         const descriptionText = new PIXI.Text(description, {
-          fontFamily: 'Atkinson Hyperlegible',
+          fontFamily: ['Atkinson Hyperlegible', 'sans-serif'],
           fill: 0x666666,
           fontSize: 14,
           wordWrap: true,
@@ -49,7 +49,7 @@ export default class Menu {
 
         // Text button to go to gameplay screen
         const gameplayText = new PIXI.Text('Start a new game', {
-          fontFamily: 'Roboto Mono',
+          fontFamily: ['Roboto Mono', 'monospace'],
           fill: 0x000000,
           fontSize: 24
         });
@@ -65,7 +65,7 @@ export default class Menu {
 
         // Text button to go to game history screen
         const historyText = new PIXI.Text('Game history', {
-          fontFamily: 'Roboto Mono',
+          fontFamily: ['Roboto Mono', 'monospace'],
           fill: 0xcccccc,
           fontSize: 24
         });

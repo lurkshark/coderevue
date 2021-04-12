@@ -15,7 +15,7 @@ export default class Gameplay {
       const setup = async (loader, resources) => {
         // Text button to go back to menu screen
         const exitText = new PIXI.Text('Exit to menu', {
-          fontFamily: 'Roboto Mono',
+          fontFamily: ['Roboto Mono', 'monospace'],
           fill: 0x000000,
           fontSize: 16
         });

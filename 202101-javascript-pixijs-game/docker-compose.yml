@@ -10,3 +10,4 @@ services:
       # mounted as the working directory
       - ./:/usr/workspace
     working_dir: /usr/workspace
+    command: "npm start"
