@@ -1,5 +1,7 @@
 import * as PIXI from 'pixi.js';
-import Menu from './menu'
+import Archive from './data/archive';
+import Game from './data/game';
+import Menu from './menu';
 // We're going to be using the asset loader to load this
 import hiloArrowsAsset from './assets/sprites/hilo-arrows.png';
 
@@ -8,14 +10,15 @@ export default class Gameplay {
   constructor(coordinator) {
     this.app = coordinator.app;
     this.coordinator = coordinator;
+    this.localforage = coordinator.localforage;
   }
 
   onStart(container) {
     return new Promise((resolve) => {
       const setup = async (loader, resources) => {
         // Text button to go back to menu screen
-        const exitText = new PIXI.Text('Exit to menu', {
-          fontFamily: 'Roboto Mono',
+        const exitText = new PIXI.Text('← Exit to menu', {
+          fontFamily: ['Roboto Mono', 'monospace'],
           fill: 0x000000,
           fontSize: 16
         });
@@ -42,6 +45,24 @@ export default class Gameplay {
 
         container.addChild(exitText);
         container.addChild(this.arrowsSprite);
+
+        // Load the locally saved games and see if one is currently in play
+        const archive = await Archive.Repository(this.localforage).load();
+        const currentGame = archive.currentGame();
+        if (!currentGame) {
+          // No currently active game so generate a new one and save it
+          this.game = await Game.Repository(this.localforage).save(new Game());
+          const updatedArchive = archive.registerGame(this.game);
+          // Save the archive after the newly generate game data is registered with it
+          await Archive.Repository(this.localforage).save(updatedArchive);
+        } else {
+          // There is a currently active game so just use that
+          this.game = currentGame;
+        }
+
+        window.game = this.game;
+        // Now the game is loaded so update the view
+        this.updateGameState();
         resolve();
       }
 
@@ -55,6 +76,10 @@ export default class Gameplay {
       // Load any assets and setup
       PIXI.Loader.shared.load(setup);
     });
+  }
+
+  updateGameState() {
+    console.log(this.game);
   }
 
   // We're just going to slowly rotate the icon
