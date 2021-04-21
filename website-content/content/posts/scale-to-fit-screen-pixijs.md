@@ -35,8 +35,83 @@ Another consideration for our scaling logic is whether or not we want to re-calc
 
 ## Implementation
 
-You can find the [final project on GitHub](https://github.com/lurkshark/coderevue/tree/main/202101-javascript-pixijs-game) or follow along below; we're going to implement both types of scaling here even though the final project is using fixed-ratio scaling. This scaling functionality fits well with the scene switching system we implemented for [creating a scene system for PixiJS]({{< ref "posts/create-scene-system-pixijs" >}}).
+You can find the [final project on GitHub](https://github.com/lurkshark/coderevue/tree/main/202101-javascript-pixijs-game) or follow along below; we're going to implement fixed-ratio scaling here. This scaling functionality fits well with the scene switching system we implemented for [creating a scene system for PixiJS]({{< ref "posts/create-scene-system-pixijs" >}}).
 
 ### Fixed Scaling
 
-### Dynamic Scaling
+In this example we're going to do a fixed scaling ratio of a portrait 9:16 aspect. The application is going to scale to fit the entire screen, but the `createScaledContainer` function is going to create an inner PixiJS container for us to add DisplayObjects to. The container is going to have a 9:16 aspect ratio and fit the screen depending on if its width or height constrained.
+
+```js
+import * as PIXI from 'pixi.js';
+
+export default class Hilo {
+
+  constructor(window, body) {
+    // Adjust the resolution for retina screens; along with
+    // the autoDensity this transparently handles high resolutions
+    PIXI.settings.RESOLUTION = window.devicePixelRatio || 1;
+    this.window = window;
+
+    // The PixiJS application instance
+    this.app = new PIXI.Application({
+      resizeTo: window, // Auto fill the screen
+      autoDensity: true, // Handles high DPI screens
+      backgroundColor: 0xffffff
+    });
+
+    // Add application canvas to body
+    body.appendChild(this.app.view);
+
+    // Create the scaled stage and then add stuff to it
+    this.createScaledContainer((container) => {
+    });
+  }
+
+  // Clear the stage and create a new scaled container; the
+  // provided callback will be called with the new container
+  createScaledContainer(callback) {
+    this.app.stage.removeChildren();
+
+    // This is the stage for the new scene
+    const container = new PIXI.Container();
+    container.width = this.WIDTH;
+    container.height = this.HEIGHT;
+    container.scale.x = this.actualWidth() / this.WIDTH;
+    container.scale.y = this.actualHeight() / this.HEIGHT;
+    container.x = this.app.screen.width / 2 - this.actualWidth() / 2;
+    container.y = this.app.screen.height / 2 - this.actualHeight() / 2;
+
+    // Add the container to the stage and call the callback
+    this.app.stage.addChild(container);
+    callback(container);
+  }
+
+  // These functions are using getters to
+  // simulate constant class variables
+
+  get WIDTH() {
+    return 375;
+  }
+
+  get HEIGHT() {
+    return 667;
+  }
+
+  // The dynamic width and height lets us do some smart
+  // scaling of the main game content; here we're just
+  // using it to maintain a 9:16 aspect ratio and giving
+  // our scenes a 375x667 stage to work with
+
+  actualWidth() {
+    const { width, height } = this.app.screen;
+    const isWidthConstrained = width < height * 9 / 16;
+    return isWidthConstrained ? width : height * 9 / 16;
+  }
+
+  actualHeight() {
+    const { width, height } = this.app.screen;
+    const isHeightConstrained = width * 16 / 9 > height;
+    return isHeightConstrained ? height : width * 16 / 9;
+  }
+}
+```

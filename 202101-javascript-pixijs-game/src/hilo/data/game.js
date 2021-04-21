@@ -13,30 +13,20 @@ export default class Game {
 
   static Repository(localforage) {
     return {
-      load: async (id) => {
-        const gameKey = `Game:${id}`;
+      load: async (seed) => {
+        const gameKey = `Game:${seed}`;
         const gameData = await localforage.getItem(gameKey);
         if (gameData === null) return null;
         return new Game(
           gameData.seed,
-          gameData.turnRolls,
-          gameData.totalDiceRolls,
-          gameData.currentDice,
-          gameData.scorecard,
-          gameData.bonuses,
-          gameData.time
+          gameData.picks
         );
       },
       save: async (game) => {
-        const gameKey = `Game:${game.id}`;
+        const gameKey = `Game:${game.seed}`;
         await localforage.setItem(gameKey, {
           seed: game.seed,
-          turnRolls: game.turnRolls,
-          totalDiceRolls: game.totalDiceRolls,
-          currentDice: game.currentDice,
-          scorecard: game.scorecard,
-          bonuses: game.bonuses,
-          time: game.time
+          picks: game.picks
         });
         return game;
       }
@@ -54,6 +44,11 @@ export default class Game {
     return (y >>> 0) / 4294967296;
   }
 
+  // The value for a given step; the "current" value
+  // is going to be the number of picks made so far.
+  // The first value is at offset zero because no
+  // picks have been made. Then after the first pick
+  // the current value will be that at offset one
   value(offset = this.picks.length) {
     return this.random(offset);
   }

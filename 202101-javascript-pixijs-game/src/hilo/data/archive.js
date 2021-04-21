@@ -15,22 +15,18 @@ export default class Archive {
           return Archive.Repository(localforage).save(new Archive());
         }
 
-        const monthAgo = new Date(new Date().setDate(new Date().getDate() - 30));
         const games = await Promise.all(
-          archiveData.gameIds.map(gameId => {
-            return Game.Repository(localforage).load(gameId);
-          });
+          archiveData.gameSeeds.map(gameSeed => {
+            return Game.Repository(localforage).load(gameSeed);
+          })
         );
 
-        const loadedGames =  games.filter(game => {
-          return game !== null && game.time > monthAgo;
-        });
-        return new Archive(loadedGames);
+        return new Archive(games);
       },
       save: async (archive) => {
         const archiveKey = 'Archive';
         await localforage.setItem(archiveKey, {
-          gameIds: archive.games.map(game => game.id);
+          gameSeeds: archive.games.map(game => game.seed)
         });
         return archive;
       }
@@ -38,20 +34,16 @@ export default class Archive {
   }
 
   recentGames(count) {
-    return [...this.games.slice(0, count + 1)];
+    return this.games.slice(0, count + 1);
   }
 
-  get currentGame() {
-    return this.recentGames(1)[0] || null;
-  }
-
-  get gameIds() {
-    return this.games.map(g => g.id);
+  currentGame() {
+    return this.recentGames(1)[0];
   }
 
   registerGame(game) {
-    if (this.currentGame === null) return new Archive([game]);
-    if (this.gameIds.includes(game.id)) return this;
+    if (!this.currentGame()) return new Archive([game]);
+    if (this.games.map(game => game.seed).includes(game.seed)) return this;
     return new Archive([game, ...this.games]);
   }
 }
