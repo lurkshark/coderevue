@@ -7,7 +7,7 @@ tags:
   - game-dev
 ---
 
-![PixiJS scene system](/202101-create-scene-system-pixijs/header.png)
+![PixiJS scene system](/create-scene-system-pixijs/header.png)
 
 You've just made a great game demo with PixiJS but now you need some more screens to make it feel like a real game. You don't want to just dump players right into the gameplay, you want a menu, maybe a high-score list, and so-on. Full-featured game engines like Phaser have a built-in scene system that you don't get with PixiJS, but sometimes you just want to build something simple. What we need is a basic scene-management system for our PixiJS project.
 
