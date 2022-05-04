@@ -10,7 +10,7 @@ tags:
 
 ![Header image for installable PWA post](/installable-pwa-game-pixijs/header.png)
 
-HTML5 game development has come a long way over the past few years, but the lack of native-app-like installability is one area that holds it back. Luckily Chrome on Android and Safari on iOS both allow users to install web applications so they show up alongside your standard mobile applications. With the use of JavaScript service workers, manifests, and recent Web APIs, your game can be installed to work offline just like any other app. This is what makes your game into a "progressive web app" or PWA.
+HTML5 game development has come a long way over the past few years, but the lack of installability is one area that holds it back. Luckily Chrome on Android and Safari on iOS both allow users to install web applications so they show up alongside your standard mobile applications. With the use of JavaScript service workers, manifests, and recent Web APIs, your game can be installed to work offline just like any other app. This is what makes your game into a "progressive web app" or PWA.
 
 ## Installing a PWA
 
