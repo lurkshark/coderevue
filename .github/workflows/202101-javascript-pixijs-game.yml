@@ -1,0 +1,11 @@
+name: Build project
+on: pull_request
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: npm run build
+        run: |
+          cd ${GITHUB_WORKSPACE}/202101-javascript-pixijs-game
+          npm install && npm run build
