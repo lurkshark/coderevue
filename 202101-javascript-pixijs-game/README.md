@@ -3,6 +3,8 @@
 A simple JavaScript guessing game that can be installed as a progressive-web-application on your mobile phone. Follow along with the tutorials on CodeREVUE.net to learn more about how this all fits together. Feel free to open an issue if you run into any issues.
 
 - [Create a scene system for PixiJS](https://coderevue.net/posts/create-scene-system-pixijs/)
+- [Scale a PixiJS game to fit the screen](https://coderevue.net/posts/scale-to-fit-screen-pixijs/)
+- [Make your PixiJS game an installable app](https://coderevue.net/posts/installable-pwa-game-pixijs/)
 
 ## Local Develpment
 
