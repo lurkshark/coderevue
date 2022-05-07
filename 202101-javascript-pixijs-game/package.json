@@ -9,14 +9,14 @@
     "start": "parcel src/index.html --host 0.0.0.0 --hmr-hostname localhost --port 8080 --hmr-port 8081"
   },
   "dependencies": {
-    "pixi.js": "~5.2.0",
-    "localforage": "^1.7.3",
+    "pixi.js": "~6.3.2",
+    "localforage": "^1.10.0",
     "webfontloader": "^1.6.28"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.7",
-    "@babel/preset-env": "^7.12.7",
-    "parcel-bundler": "^1.12.4",
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "parcel": "^2.5.0",
     "parcel-plugin-sw-precache": "^1.1.2"
   },
   "browserslist": "firefox esr",
