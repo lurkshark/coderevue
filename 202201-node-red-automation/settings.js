@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 /**
  * This is the default settings file provided by Node-RED.
  *
@@ -41,7 +43,7 @@ module.exports = {
      * node-red from being able to decrypt your existing credentials and they will be
      * lost.
      */
-    //credentialSecret: "a-secret-key",
+    credentialSecret: process.env.CREDENTIAL_FILE_KEY,
 
     /** By default, the flow JSON will be formatted over multiple lines making
      * it easier to compare changes when using version control.
@@ -53,7 +55,7 @@ module.exports = {
      * the user's home directory. To use a different location, the following
      * property can be used
      */
-    //userDir: '/home/nol/.node-red/',
+    userDir: './',
 
     /** Node-RED scans the `nodes` directory in the userDir to find local node files.
      * The following property can be used to specify an additional directory to scan.
@@ -164,7 +166,7 @@ module.exports = {
      * The following property can be used to specify a different root path.
      * If set to false, this is disabled.
      */
-    //httpAdminRoot: '/admin',
+    httpAdminRoot: false,
 
     /** The following property can be used to add a custom middleware function
      * in front of all admin http routes. For example, to set custom http

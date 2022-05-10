@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "node-red --userDir=./runtime",
-    "start": ""
+    "development": "node-red --settings=./settings.js -D httpAdminRoot=/",
+    "start": "node-red --settings=./settings.js"
   },
   "repository": {
     "type": "git",
@@ -16,6 +16,8 @@
   },
   "homepage": "https://github.com/lurkshark/coderevue/tree/main#readme",
   "dependencies": {
-    "node-red": "^2.2.2"
+    "dotenv": "^16.0.0",
+    "node-red": "^2.2.2",
+    "node-red-node-random": "~0.4.0"
   }
 }
