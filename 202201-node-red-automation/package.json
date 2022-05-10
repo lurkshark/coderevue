@@ -1,0 +1,21 @@
+{
+  "name": "202201-node-red-automation",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node-red --userDir=./runtime",
+    "start": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lurkshark/coderevue.git#main"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/lurkshark/coderevue/issues"
+  },
+  "homepage": "https://github.com/lurkshark/coderevue/tree/main#readme",
+  "dependencies": {
+    "node-red": "^2.2.2"
+  }
+}
