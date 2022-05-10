@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/lurkshark/coderevue.git#main"
   },
-  "license": "Apache-2.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/lurkshark/coderevue/issues"
   },
