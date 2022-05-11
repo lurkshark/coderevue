@@ -1,0 +1,23 @@
+{
+  "name": "202201-node-red-automation",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "development": "node-red --settings=./settings.js -D httpAdminRoot=/",
+    "start": "node-red --settings=./settings.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lurkshark/coderevue.git#main"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lurkshark/coderevue/issues"
+  },
+  "homepage": "https://github.com/lurkshark/coderevue/tree/main#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "node-red": "^2.2.2",
+    "node-red-node-random": "~0.4.0"
+  }
+}
