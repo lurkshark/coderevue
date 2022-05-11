@@ -33,7 +33,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <title>Hello from node-red</title>\n  </head>\n  <body>\n    {{^payload.name}}\n      <h1>Hello world!</h1>\n    {{/payload.name}}\n    {{#payload.name}}\n      <h1>Hello {{payload.name}}!</h1>\n    {{/payload.name}}\n    <p>Your lucky number is {{random}}</p>\n  </body>\n</html>",
+        "template": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <title>Hello from node-red</title>\n  </head>\n  <body>\n    {{^payload.name}}\n      <h1>Hello world!</h1>\n    {{/payload.name}}\n    {{#payload.name}}\n      <h1>Hello {{payload.name}}!</h1>\n    {{/payload.name}}\n    <p>Your lucky number is {{random}}.</p>\n  </body>\n</html>",
         "output": "str",
         "x": 440,
         "y": 160,
