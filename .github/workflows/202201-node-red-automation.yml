@@ -1,4 +1,4 @@
-name: Deploy to NearlyFreeSpeech.NET
+name: Deploy Node-RED to NearlyFreeSpeech.NET
 on:
   push:
     branches:
@@ -8,11 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: npm install
-        run: |
-          cd ${GITHUB_WORKSPACE}/202201-node-red-automation
-          npm install
-      - name: Rsync generated files to remote server
+      - name: Rsync and install package on remote server
         env:
           NFSN_HOST: ${{ secrets.NFSN_HOST }}
           NFSN_SSH_KEY: ${{ secrets.NFSN_SSH_KEY }}
@@ -23,3 +19,7 @@ jobs:
           SOURCE=${GITHUB_WORKSPACE}/202201-node-red-automation/
           DESTINATION=${NFSN_USERNAME}@${NFSN_HOST}:/home/protected
           rsync -zvrh -e 'ssh -o StrictHostKeyChecking=no' ${SOURCE} ${DESTINATION}
+          ssh ${NFSN_USERNAME}@${NFSN_HOST} <<EOF
+            cd /home/protected
+            npm install
+          EOF

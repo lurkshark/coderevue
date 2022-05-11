@@ -1,4 +1,4 @@
-name: Deploy to NearlyFreeSpeech.NET
+name: Deploy website content to NearlyFreeSpeech.NET
 on:
   push:
     branches:
