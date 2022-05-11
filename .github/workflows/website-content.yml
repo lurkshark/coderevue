@@ -23,7 +23,7 @@ jobs:
         env:
           NFSN_HOST: ${{ secrets.NFSN_HOST }}
           NFSN_SSH_KEY: ${{ secrets.NFSN_SSH_KEY }}
-          NFSN_USERNAME: ${{ secrets.NFSN_USERNAME }}
+          NFSN_USERNAME: ${{ secrets.NFSN_USERNAME_CODEREVUE_NET }}
         run: |
           eval `ssh-agent`
           ssh-add - <<< ${NFSN_SSH_KEY}

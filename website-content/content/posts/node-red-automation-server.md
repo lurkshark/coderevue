@@ -1,6 +1,7 @@
 ---
 title: Node-RED as an open-source alternative to Zapier for workflow automation
 date: 2022-05-09
+draft: true
 tags:
   - 202201-node-red-automation
   - javascript
