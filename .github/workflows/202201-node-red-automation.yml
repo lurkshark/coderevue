@@ -20,6 +20,6 @@ jobs:
           DESTINATION=${NFSN_USERNAME}@${NFSN_HOST}:/home/protected
           rsync -zvrh -e 'ssh -o StrictHostKeyChecking=no' ${SOURCE} ${DESTINATION}
           ssh ${NFSN_USERNAME}@${NFSN_HOST} <<EOF
-            cd /home/protected
-            npm install
+            cd /home/protected && npm install
+            nfsn signal-daemon npm term
           EOF
