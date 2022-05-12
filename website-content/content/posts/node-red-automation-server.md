@@ -38,7 +38,23 @@ npm exec -- node-red --userDir=./
 
 Feel free to poke around the editor before killing the process, it should be running on your [local machine](http://localhost:1880/). You'll notice some new files in your project directory, some of these are cache files we don't care about, and one will be the `settings.js` file which we're going to edit.
 
+Before moving on though let's create a `.gitignore` file to exclude all the files we don't want in Git.
+
+```sh
+# Dependency code
+node_modules/
+
+# Editor temp files
+.config.*.json
+*.json.backup
+
+# Credential file key
+.env
+```
+
 ## Editing the settings file
+
+When you launched Node-RED it created a file called `settings.js` in your project directory. This file is prepopulated with default values for the configurable options.
 
 ## Using dotenv to store the credential key
 
