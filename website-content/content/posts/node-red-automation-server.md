@@ -54,7 +54,27 @@ node_modules/
 
 ## Editing the settings file
 
-When you launched Node-RED it created a file called `settings.js` in your project directory. This file is prepopulated with default values for the configurable options.
+When you launched Node-RED it created a file called `settings.js` in your project directory. This file is prepopulated with default values for the configurable options. We're going to edit the `userDir` setting first to point to our current directory.
+
+```js
+/** By default, all user data is stored in a directory called `.node-red` under
+ * the user's home directory. To use a different location, the following
+ * property can be used
+ */
+userDir: './',
+```
+
+We'll continue to tweak this file in order to lock-down our Node-RED deployment. First let's test out the change to the `userDir` setting by adding an `editor` npm script to our `package.json` for executing Node-RED with the settings file.
+
+```json
+{
+  // ...
+  "scripts": {
+    "editor": "node-red --settings=./settings.js",
+  },
+  // ...
+}
+```
 
 ## Using dotenv to store the credential key
 
