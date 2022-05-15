@@ -1,4 +1,4 @@
-name: Deploy Node-RED to NearlyFreeSpeech.NET
+name: Deploy Node-RED to Google App Engine
 on:
   push:
     branches:
@@ -10,6 +10,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Create .env file for deployment
         run: |
+          cd ${GITHUB_WORKSPACE}/202201-node-red-automation
           echo "CREDENTIAL_FILE_KEY=${{ secrets.NODE_RED_CREDENTIAL_FILE_KEY }}" >> .env
       - name: Deploy to Google App Engine
         uses: google-github-actions/deploy-appengine@v0.8.0
@@ -17,3 +18,4 @@ jobs:
           deliverables: app.yaml
           project_id: ${{ secrets.GCP_PROJECT_NODE_RED }}
           credentials: ${{ secrets.GCP_CREDENTIALS_NODE_RED }}
+          working_directory: ${GITHUB_WORKSPACE}/202201-node-red-automation
