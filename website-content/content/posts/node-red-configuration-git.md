@@ -1,6 +1,7 @@
 ---
 title: Manage your Node-RED configuration in Git
 date: 2022-05-09
+draft: true
 tags:
   - 202201-node-red-automation
   - javascript
