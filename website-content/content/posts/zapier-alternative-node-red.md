@@ -1,6 +1,7 @@
 ---
 title: Manage your Node-RED configuration in Git
 date: 2022-05-09
+draft: true
 tags:
   - 202201-node-red-automation
   - javascript
@@ -9,9 +10,9 @@ tags:
 
 ![Header image for Node-RED automation post](/node-red-configuration-git/header.png)
 
-[Node-RED](https://nodered.org/) is an open-source project for low-code event-driven programming. It's built on NodeJS and allows you to define automation flows with [pre-made](https://flows.nodered.org/search?type=node&sort=downloads) or [custom-made](https://nodered.org/docs/creating-nodes/) nodes as well as [inline JavaScript functions](https://nodered.org/docs/user-guide/writing-functions). It's design was originally guided by the IoT use-case, so the workflow configurations are stored as un-versioned flat files. This can make it difficult to store and collaborate on workflow development.
+[Zapier](https://zapier.com/) is a great tool for automating busywork but it can get expensive quickly. Billing is based on the number of steps in a workflow that get executed, so adding just a few extra tasks like parsing or formatting text can inflate your costs. [Node-RED](https://nodered.org/) is an open-source project for low-code event-driven programming, very similar to Zapier but a bit more technical. It's built on NodeJS and allows you to define automation flows with [pre-made](https://flows.nodered.org/search?type=node&sort=downloads) or [custom-made](https://nodered.org/docs/creating-nodes/) nodes as well as [inline JavaScript functions](https://nodered.org/docs/user-guide/writing-functions).
 
-In this project we're going to setup Node-RED in a npm project so all the files can be tracked in a Git repository. This makes it easy to backup your configuration and work with collaborators.
+Node-RED is usually mentioned in the context of connected devices and home automation because that's the use-case that the project was originally built for, but with all the functionality that has been added over the years it's grown to be capable of almost any workflow you could want. This makes it a great candidate as an open-source alternative to Zapier.
 
 ## Setting-up your environment
 
@@ -120,7 +121,7 @@ Use the editor to build a simple flow, or if you just want a copy my example you
 
 ![Screenshot of a flow in Node-RED](/node-red-configuration-git/node-red-flow.png)
 
-This flow takes input from a `/hello` HTTP request, adds a random number, and responds with a templated HTML page. If there's a `name` param in the request then it's included in the response. Once you have the flow deployed you can test it out at [`http://localhost:1880/hello?name=automator`](http://localhost:1880/hello?name=keeper+of+the+workflows).
+This flow takes input from a `/hello` HTTP request, adds a random number, and responds with a templated HTML page. If there's a `name` param in the request then it's included in the response. Once you have the flow deployed you can test it out at [`http://localhost:1880/hello?name=automator`](http://localhost:1880/hello?name=automator).
 
 ## Commit your configuration
 
