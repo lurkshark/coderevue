@@ -4,22 +4,16 @@ on:
     branches:
       - main
 jobs:
-  build_and_deploy:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Rsync and install package on remote server
-        env:
-          NFSN_HOST: ${{ secrets.NFSN_HOST }}
-          NFSN_SSH_KEY: ${{ secrets.NFSN_SSH_KEY }}
-          NFSN_USERNAME: ${{ secrets.NFSN_USERNAME_GUZZLE_DIRTY_VODKA }}
+      - name: Create .env file for deployment
         run: |
-          eval `ssh-agent`
-          ssh-add - <<< ${NFSN_SSH_KEY}
-          SOURCE=${GITHUB_WORKSPACE}/202201-node-red-automation/
-          DESTINATION=${NFSN_USERNAME}@${NFSN_HOST}:/home/protected
-          rsync -zvrh -e 'ssh -o StrictHostKeyChecking=no' ${SOURCE} ${DESTINATION}
-          ssh ${NFSN_USERNAME}@${NFSN_HOST} <<EOF
-            cd /home/protected && npm install
-            nfsn signal-daemon npm term
-          EOF
+          echo "CREDENTIAL_FILE_KEY=${{ secrets.NODE_RED_CREDENTIAL_FILE_KEY }}" >> .env
+      - name: Deploy to Google App Engine
+        uses: google-github-actions/deploy-appengine@v0.8.0
+        with:
+          deliverables: app.yaml
+          project_id: ${{ secrets.GCP_PROJECT_NODE_RED }}
+          credentials: ${{ secrets.GCP_CREDENTIALS_NODE_RED }}
