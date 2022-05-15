@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "development": "node-red --settings=./settings.js -D httpAdminRoot=/",
+    "editor": "node-red --settings=./settings.js -D httpAdminRoot=/",
     "start": "node-red --settings=./settings.js"
   },
   "repository": {
