@@ -18,4 +18,4 @@ jobs:
           deliverables: app.yaml
           project_id: ${{ secrets.GCP_PROJECT_NODE_RED }}
           credentials: ${{ secrets.GCP_CREDENTIALS_NODE_RED }}
-          working_directory: ${GITHUB_WORKSPACE}/202201-node-red-automation
+          working_directory: ${{ GITHUB_WORKSPACE }}/202201-node-red-automation
