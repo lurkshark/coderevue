@@ -1,7 +1,6 @@
 ---
 title: Manage your Node-RED configuration in Git
 date: 2022-05-09
-draft: true
 tags:
   - 202201-node-red-automation
   - javascript
@@ -57,11 +56,16 @@ node_modules/
 When you launched Node-RED it created a file called `settings.js` in your project directory. This file is prepopulated with default values for the configurable options. We're going to edit the `userDir` setting first to point to our current directory.
 
 ```js
-/** By default, all user data is stored in a directory called `.node-red` under
- * the user's home directory. To use a different location, the following
- * property can be used
- */
-userDir: './',
+// ...
+module.exports = {
+    // ...
+    /** By default, all user data is stored in a directory called `.node-red` under
+     * the user's home directory. To use a different location, the following
+     * property can be used
+     */
+    userDir: './',
+    // ...
+}
 ```
 
 We'll continue to tweak this file in order to lock-down our Node-RED deployment. First let's test out the change to the `userDir` setting by adding an `editor` npm script to our `package.json` for executing Node-RED with the settings file.
@@ -80,17 +84,19 @@ We'll continue to tweak this file in order to lock-down our Node-RED deployment.
 
 Some Node-RED nodes use passwords or other forms of credentials while executing. For example, the [`node-red-node-email`](https://flows.nodered.org/node/node-red-node-email) node uses a username and password to retreive emails. These credentials get encrypted using a secret key and stored in the `flows_cred.json` file. This secret key should never be posted publicly so using an environment variable is a good option for passing it into Node-RED.
 
-
+The `dotenv` npm package lets us create a local file named `.env` with any environment variables we want to configure. Since we added it to our `.gitignore` file already, the `.env` file won't get checked into Git and will stay on your local machine. First let's add the dependency to our project.
 
 ```bash
 npm install dotenv
 ```
 
-https://www.random.org/passwords/?num=1&len=24&format=plain&rnd=new
+We're going to set an environment variable named `CREDENTIAL_FILE_KEY` to be a randomly generated secret. This secret should be extremely difficult to guess so I recommend using a totally random string. The [password generator from RANDOM.org](https://www.random.org/passwords/?num=1&len=24&format=plain&rnd=new) is a good option for generating a secret key. For a little extra security you can generate two and concatenate them together.
 
 ```bash
 CREDENTIAL_FILE_KEY=hefTcRcG3rLbCXCKwaE9GjZR
 ```
+
+Now we need edit the `settings.js` file to use our key. You'll need to import the `dotenv` library at the top of the file and then reference the environment variable. I added an immediatly-invoked-function that throws an error if for some reason it can't load the variable. This helps avoid a situation where Node-RED starts running with `undefined` as the secret.
 
 ```js
 require('dotenv').config()
