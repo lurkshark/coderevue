@@ -7,7 +7,7 @@ tags:
   - automation
 ---
 
-![Header image for Node-RED automation post](/node-red-configuration-git/header.png)
+![Header image for Node-RED configuration management post](/node-red-configuration-git/header.png)
 
 [Node-RED](https://nodered.org/) is an open-source project for low-code event-driven programming. It's built on NodeJS and allows you to define automation flows with [pre-made](https://flows.nodered.org/search?type=node&sort=downloads) or [custom-made](https://nodered.org/docs/creating-nodes/) nodes as well as [inline JavaScript functions](https://nodered.org/docs/user-guide/writing-functions). It's design was originally guided by the IoT use-case, so the workflow configurations are stored as un-versioned flat files. This can make it difficult to store and collaborate on workflow development.
 
