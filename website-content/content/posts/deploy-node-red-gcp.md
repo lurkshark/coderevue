@@ -81,6 +81,8 @@ Keeping the service running a single instance at a time helps if you use polling
 ```yaml
 runtime: nodejs16
 instance_class: F1
+inbound_services:
+  - warmup
 automatic_scaling:
   min_instances: 1
   max_instances: 1
