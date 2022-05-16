@@ -14,4 +14,6 @@ tags:
 
 ## Setting-up Google App Engine
 
+https://github.com/google-github-actions/deploy-appengine#via-google-github-actionsauth
+
 ## Automatic deployment with GitHub Actions
