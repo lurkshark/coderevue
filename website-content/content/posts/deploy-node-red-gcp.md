@@ -11,7 +11,7 @@ tags:
 
 Node-RED is often deployed to self-hosted targets like a Raspberry PI where all the editing and configuration is done on that machine. This works fine for smaller individual projects, but leaves out the potential for it to be used as a great general purpose workflow automation tool. By deploying our flows in a locked-down instance on Google App Engine, we can have a full-featured automation platform running for dirt cheap.
 
-This project builds on the previous work we did to [setup Node-RED in a verion-controlled project]({{< relref "node-red-configuration.md" >}}). If you just want to see an example of the final result, checkout the project in the [CodeREVUE.net GitHub repository](https://github.com/lurkshark/coderevue/tree/main/202201-node-red-automation).
+This project builds on the previous work we did to [setup Node-RED in a verion-controlled project]({{< relref "/posts/node-red-configuration.md" >}}). If you just want to see an example of the final result, checkout the project in the [CodeREVUE.net GitHub repository](https://github.com/lurkshark/coderevue/tree/main/202201-node-red-automation).
 
 ## Locking-down the configuration
 
