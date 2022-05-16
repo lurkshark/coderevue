@@ -64,9 +64,9 @@ Now we need to setup a service account that we'll use later to automatically upd
 - **Storage Admin** (roles/compute.storageAdmin): To upload files
 - **Cloud Build Editor** (roles/cloudbuild.builds.editor): To build the application
 
-In the same area as the link to "Manage Permissions" you'll see a link to "Manage Keys". On this page you'll need to click "Add Key" then select the JSON option and click "Create". This will download a JSON file to your computer; the contents of this file are a key that we'll use later in configuring GitHub Actions.
-
 ![Service account details on GCP](/deploy-node-red-gcp/service-account.png)
+
+In the same area as the link to "Manage Permissions" you'll see a link to "Manage Keys". On this page you'll need to click "Add Key" then select the JSON option and click "Create". This will download a JSON file to your computer; the contents of this file are a key that we'll use later in configuring GitHub Actions.
 
 Finally you'll need to enable the [App Engine Admin API](https://console.developers.google.com/apis/api/appengine.googleapis.com/overview) and [Cloud Build Admin API](https://console.developers.google.com/apis/api/cloudbuild.googleapis.com/overview) for the project. This will require attaching a billing account to the project so go ahead and set that up if you need to.
 
