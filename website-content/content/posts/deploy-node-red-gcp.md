@@ -1,5 +1,5 @@
 ---
-title: Deploy Node-RED to Google App Engine
+title: Deploying Node-RED to Google App Engine
 date: 2022-05-12
 tags:
   - 202201-node-red-automation
@@ -9,13 +9,13 @@ tags:
 
 ![Header image for Node-RED GCP deployment post](/deploy-node-red-gcp/header.png)
 
-Node-RED is often deployed to self-hosted targets like a Raspberry PI where all the editing and configuration is done on that machine. This works fine for smaller individual projects, but leaves out the potential for it to be used as a great general purpose workflow automation tool. By deploying our flows in a locked-down instance on Google App Engine, we can have a full-featured automation platform running for dirt cheap.
+Node-RED is often deployed to self-hosted environments like a Raspberry PI where all the editing and configuration is done on that machine. This works fine for smaller individual projects, but leaves out the potential for using it as a general purpose workflow automation tool. By deploying our flows on Google App Engine, we can have an extensible automation platform running for dirt cheap.
 
-This project builds on the previous work we did to [setup Node-RED in a verion-controlled project]({{< relref "/posts/node-red-configuration-git.md" >}}). If you just want to see an example of the final result, checkout the project in the [CodeREVUE.net GitHub repository](https://github.com/lurkshark/coderevue/tree/main/202201-node-red-automation).
+This project builds on the previous work we did to [setup Node-RED in a version-controlled project]({{< relref "/posts/node-red-configuration-git.md" >}}). If you just want to see an example of the final result, checkout the [project on GitHub](https://github.com/lurkshark/coderevue/tree/main/202201-node-red-automation).
 
 ## Locking-down the configuration
 
-When we deploy Node-RED to our production server we want to completely disable editing functionality. There are a couple benefits to this: all changes will go through version-control and we don't need to worry about securing the editor. Plus since we want to use the cheaper App Engine standard environment instead of the flexible environment, the service will be deployed on a read-only filesystem.
+When we deploy Node-RED to our production server we want to completely disable editing functionality. There are a couple benefits to this: all changes will go through version-control, and we don't need to worry about securing the editor. Plus since we want to use the cheaper App Engine standard environment instead of the flexible environment, the service will be deployed on a read-only filesystem.
 
 The two settings we want to change are `httpAdminRoot` which when set to `false` will disable the editor, and `readOnly` which will prevent Node-RED from trying to create any config files on the host. These are configured in the `settings.js` file.
 
@@ -35,7 +35,7 @@ module.exports = {
 }
 ```
 
-Since our default `settings.js` file will lock-down the editor, we're going to need to add another npm script to override those settings for when we want to run the editor locally to make changes to the flows. The `node-red` command accepts setting overrides with the `-D` flag which we'll use to revert the changes we just made when running an `editor` command.
+Since our default `settings.js` file will lock-down the editor, we're going to need to add another npm script to override those settings for runbning the editor locally to make changes to the flows. The `node-red` command accepts setting overrides with the `-D` flag which we'll use to revert the changes we just made.
 
 ```json
 {
@@ -53,9 +53,9 @@ Now when you want to change any flows you'll use the `npm run editor` command to
 
 ## Setting-up Google App Engine
 
-Our Node-RED production service is going to run on Google App Engine which is a managed environment for running your application. The main benefits to this are that we don't need to worry about any boilerplate configuration of the hosts, and with the right configuration we can actually keep everything within the forever free-tier.
+Our Node-RED production service is going to run on Google App Engine which is a managed environment for running your Node.js application. The main benefits are that we don't need to worry about any boilerplate configuration of the hosts, and with the right configuration we can actually keep everything within the forever free-tier. Simple and cheap.
 
-For the following steps I just used the Google Cloud web console, but these steps can also be accomplished with the `gcloud` CLI tool if you're more comfortable with that. First create a new project and then create an App Engine application for that project.
+For the following steps I just used the Google Cloud web console, but these steps can also be accomplished with the `gcloud` CLI tool if you're more comfortable with that. First create a new project and then create an App Engine application in that project.
 
 Now we need to setup a service account that we'll use later to automatically update our service with GitHub Actions. Go to "IAM & Admin" then "Service Accounts". Click on the "Create Service Account" button at the top and name it "GitHub Actions". Next go to the "Manage Permissions" page for the service account you just created. We need to grant the account [some permissions](https://github.com/google-github-actions/deploy-appengine#via-google-github-actionsauth) to allow it to deploy to App Engine.
 
@@ -81,6 +81,8 @@ Keeping the service running a single instance at a time helps if you use polling
 ```yaml
 runtime: nodejs16
 instance_class: F1
+inbound_services:
+  - warmup
 automatic_scaling:
   min_instances: 1
   max_instances: 1
