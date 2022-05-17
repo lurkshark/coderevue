@@ -1,5 +1,5 @@
 :root {
-  --bgcolor: #f4f4f4;
+  --bgcolor: #ffffff;
   --fontcolor: #232323;
   --maincolor: #ff0000;
   --hovercolor: #6666ff;
@@ -65,7 +65,6 @@ ul > li::before {
 
 /* Images */
 img {
-  border: 3px solid #ececec;
   max-width: 100%;
 }
 
