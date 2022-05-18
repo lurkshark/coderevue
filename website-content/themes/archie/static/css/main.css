@@ -4,9 +4,21 @@
   --maincolor: #ff0000;
   --hovercolor: #6666ff;
   --bordercolor: #333333;
-  --callouctcolor: #0099ff;
+  --calloutcolor: #0099ff;
+  --emphasisbgcolor: #f1f1f1;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bgcolor: #000000;
+    --fontcolor: #cfcfcf;
+    --maincolor: #ff0000;
+    --hovercolor: #6666ff;
+    --bordercolor: #333333;
+    --calloutcolor: #0099ff;
+    --emphasisbgcolor: #333333;
+  }
+}
 html {
   color: var(--fontcolor);
   background-color: var(--bgcolor);
@@ -96,7 +108,7 @@ figure h4::before {
 
 /* Code blocks */
 code {
-  background-color: #f1f1f1;
+  background-color: var(--emphasisbgcolor);
   padding: .1em .2em;
 }
 
@@ -162,7 +174,7 @@ time {
 
 /* Callout */
 .callout {
-  background-color: var(--callouctcolor);
+  background-color: var(--calloutcolor);
   color: #fff;
   padding: 1em;
 }
@@ -178,7 +190,7 @@ time {
 
 .callout a:hover {
   background-color: #fff;
-  color: var(--callouctcolor);
+  color: var(--calloutcolor);
 }
 
 .site-description {
