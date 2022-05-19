@@ -19,6 +19,8 @@ One area where a Node-RED deployment shines in comparison to Zapier is in versio
 
 Getting this setup right does take a bit of work, which you can read about in this article on [managing Node-RED configuration in Git]({{< relref "/posts/node-red-configuration-git.md" >}}). Basically you need to install Node-RED to a local npm project instead of the standard global install. Editing flows is done on your local machine and can be deployed to a production host like Google App Engine, which we'll get to.
 
+![Diagram of editing flows then deploying](/zapier-alternative-node-red/overview.png)
+
 With this in place you get both version control and collaboration for free. If you wanted to take it a step further, you could even write integration tests for your flows and have them automatically run in GitHub Actions.
 
 Now you _could_ deploy Node-RED normally to a server, setup user accounts for the editor, and let it be. But keeping the configuration in Git gives you the benefit of having backups and versioning. The local-editing workflow also lets you sleep a little easier knowing you don't have another administrative UI exposed to the internet.
@@ -40,3 +42,5 @@ Let's look at a quick example of a workflow that works really well with this kin
 In Zapier and Node-RED you can create a webhook trigger and use it as a notification channel for Datadog monitors. First thing we want to do after receiving the payload from Datadog is look at the `alert_trigger` field and only use messages where it's "Triggered". This prevents double-firing our workflow when the monitor switches back to a "Resolved" state. In Zapier this filtering is done with a "Filter" step, and a "Switch" node in Node-RED.
 
 The payload from Datadog is very verbose, and includes a bunch of boilerplate. To get a cleaner message we're going to craft our own text with any values we want to include in the template. Unfortunately with Zapier's billing model, this simple task adds to the cost of executing our workflow. Node-RED's "Template" node lets us define a text payload with [mustache templating](https://mustache.github.io/). Finally we output the message to a Slack channel. The Node-RED plugin `node-red-contrib-chatbot` can connect to Slack as well as almost every other messaging service.
+
+There are tons of different ways you can mix and match integrations with Node-RED; this example only begins to scratch the surface.
