@@ -11,7 +11,7 @@ tags:
 
 Node-RED is often deployed to self-hosted environments like a Raspberry PI where all the editing and configuration is done on that machine. This works fine for smaller individual projects, but leaves out the potential for using it as a general purpose workflow automation tool. By deploying our flows on Google App Engine, we can have an extensible automation platform running for dirt cheap.
 
-This project builds on the previous work we did to [setup Node-RED in a version-controlled project]({{< relref "/posts/node-red-configuration-git.md" >}}). If you just want to see an example of the final result, checkout the [project on GitHub](https://github.com/lurkshark/coderevue/tree/main/202201-node-red-automation).
+This project builds on the previous work we did to [setup Node-RED in a version-controlled project]({{< relref "/posts/node-red-configuration-git.md" >}}) as a part of our series on [using Node-RED as an open-source alternative to Zapier]({{< relref "/posts/zapier-alternative-node-red.md" >}}). If you just want to see an example of the final result, checkout the [project on GitHub](https://github.com/lurkshark/coderevue/tree/main/202201-node-red-automation).
 
 ## Locking-down the configuration
 
