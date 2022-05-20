@@ -20,7 +20,7 @@
   }
 
   img {
-    filter: inverse(1);
+    filter: invert(1);
   }
 }
 
