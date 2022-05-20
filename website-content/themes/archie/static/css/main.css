@@ -18,7 +18,12 @@
     --calloutcolor: #0099ff;
     --emphasisbgcolor: #333333;
   }
+
+  img {
+    filter: inverse(1);
+  }
 }
+
 html {
   color: var(--fontcolor);
   background-color: var(--bgcolor);
