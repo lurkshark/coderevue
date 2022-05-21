@@ -28,13 +28,13 @@ html {
   color: var(--fontcolor);
   background-color: var(--bgcolor);
   font-family: 'Roboto Mono', monospace;
-  line-height: 1.7em;
+  line-height: 1.6em;
   font-size: 1.2em;
 }
 
 body {
   display: block;
-  margin: 8px;
+  margin: 1em;
 }
 
 ::selection {
