@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'website-content/**'
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
