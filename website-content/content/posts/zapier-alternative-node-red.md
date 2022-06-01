@@ -13,6 +13,8 @@ tags:
 
 Node-RED is usually mentioned in the context of connected devices and home automation because that's the use-case that the project was originally built for, but with all the functionality that has been added over the years it's grown to be capable of almost any workflow you could want.
 
+Check out the [example in the CodeREVUE.net repository](https://github.com/lurkshark/coderevue/tree/main/202201-node-red-automation) if you want to see the complete setup described below.
+
 ## Collaboration and version control
 
 One area where Node-RED shines in comparison to Zapier is in versioning of workflows. Zapier doesn't keep previous versions of your Zaps so if a workflow change doesn't work the way you expected you'll need to manually undo your changes. Flows in Node-RED are defined with a flat JSON file which makes it easy to manage in Git.
