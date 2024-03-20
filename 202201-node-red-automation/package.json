@@ -17,7 +17,7 @@
   "homepage": "https://github.com/lurkshark/coderevue/tree/main#readme",
   "dependencies": {
     "dotenv": "^16.0.0",
-    "node-red": "^3.1.0",
+    "node-red": "^3.1.7",
     "node-red-node-random": "~0.4.0"
   }
 }
