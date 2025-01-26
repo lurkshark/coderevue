@@ -21,14 +21,14 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/website-content
           hugo
-      - name: Rsync generated files to remote server
+      - name: Copy generated files to remote server
         env:
-          NFSN_HOST: ${{ secrets.NFSN_HOST }}
-          NFSN_SSH_KEY: ${{ secrets.NFSN_SSH_KEY }}
-          NFSN_USERNAME: ${{ secrets.NFSN_USERNAME_CODEREVUE_NET }}
+          WEBDAV_USER: ${{ secrets.WEBDAV_USER }}
+          WEBDAV_PASSWORD: ${{ secrets.WEBDAV_PASSWORD }}
         run: |
-          eval `ssh-agent`
-          ssh-add - <<< ${NFSN_SSH_KEY}
-          SOURCE=${GITHUB_WORKSPACE}/website-content/public/
-          DESTINATION=${NFSN_USERNAME}@${NFSN_HOST}:/home/public
-          rsync -zvrh -e 'ssh -o StrictHostKeyChecking=no' ${SOURCE} ${DESTINATION}
+          sudo -v ; curl https://rclone.org/install.sh | sudo bash
+          rclone config create fastmail webdav \
+            user=${WEBDAV_USER} pass=${WEBDAV_PASSWORD} \
+            url=https://myfiles.fastmail.com vendor=fastmail \
+            --non-interactive
+          rclone copy ${GITHUB_WORKSPACE}/website-content/public/ fastmail:/coderevue/
