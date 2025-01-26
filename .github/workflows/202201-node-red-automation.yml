@@ -4,6 +4,7 @@ on:
     branches:
       - main
     paths:
+      - '.github/workflows/202201-node-red-automation.yml'
       - '202201-node-red-automation/**'
 jobs:
   deploy:
